@@ -7,12 +7,10 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Star } from "lucide-react";
 import { useCompare } from "@/context/CompareContext";
 import { brandRecommendations } from "@/data/cars";
-import { useState } from "react";
 
 export default function ComparePage() {
   const { compareList, clearCompare } = useCompare();
   const navigate = useNavigate();
-  const [selectedColors, setSelectedColors] = useState<Record<string, string>>({});
 
   if (compareList.length === 0) {
     return (
@@ -30,14 +28,6 @@ export default function ComparePage() {
       </div>
     );
   }
-
-  const handleColorSelect = (carId: string, colorImage: string) => {
-    setSelectedColors(prev => ({ ...prev, [carId]: colorImage }));
-  };
-
-  const getCarImage = (car: any) => {
-    return selectedColors[car.id] || car.image;
-  };
 
   const getBrandColor = (brand: string) => {
     switch (brand) {
@@ -83,10 +73,8 @@ export default function ComparePage() {
 
       <div className="max-w-7xl mx-auto px-4 py-8">
         <Tabs defaultValue="specs" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 mb-8">
+          <TabsList className="grid w-full grid-cols-2 mb-8">
             <TabsTrigger value="specs">Specifications</TabsTrigger>
-            <TabsTrigger value="photos">Photos</TabsTrigger>
-            <TabsTrigger value="colors">Colors</TabsTrigger>
             <TabsTrigger value="history">History</TabsTrigger>
           </TabsList>
 
@@ -120,43 +108,39 @@ export default function ComparePage() {
                         <p className="text-muted-foreground">{car.tagline}</p>
                       </CardHeader>
                       <CardContent className="space-y-4">
-                        <div className="aspect-video rounded-lg overflow-hidden mb-4">
-                          <img
-                            src={getCarImage(car)}
-                            alt={car.model}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
+                      <div className="aspect-video rounded-lg overflow-hidden mb-4">
+                        <img
+                          src={car.image}
+                          alt={car.model}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
 
                         <div className="space-y-3">
                           <div className="flex justify-between">
                             <span className="text-sm text-muted-foreground">Engine:</span>
-                            <span className="text-sm font-medium">{car.specs.engine}</span>
+                            <span className="text-sm font-medium">{car.data.variants[0]?.engine}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-sm text-muted-foreground">Power:</span>
-                            <span className="text-sm font-medium">{car.specs.power}</span>
+                            <span className="text-sm text-muted-foreground">Fuel:</span>
+                            <span className="text-sm font-medium">{car.data.variants[0]?.fuel}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-sm text-muted-foreground">Torque:</span>
-                            <span className="text-sm font-medium">{car.specs.torque}</span>
+                            <span className="text-sm text-muted-foreground">Transmission:</span>
+                            <span className="text-sm font-medium">{car.data.variants[0]?.transmission}</span>
                           </div>
                           <div className="flex justify-between">
                             <span className="text-sm text-muted-foreground">Mileage:</span>
-                            <span className="text-sm font-medium">{car.specs.mileage}</span>
+                            <span className="text-sm font-medium">{car.data.variants[0]?.mileage}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-sm text-muted-foreground">0-100 km/h:</span>
-                            <span className="text-sm font-medium">{car.specs.acceleration}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-sm text-muted-foreground">Safety:</span>
-                            <span className="text-sm font-medium">{car.specs.safetyRating}</span>
+                            <span className="text-sm text-muted-foreground">Variants:</span>
+                            <span className="text-sm font-medium">{car.data.variants.length} Available</span>
                           </div>
                           <div className="pt-2 border-t">
                             <div className="flex justify-between">
-                              <span className="text-sm text-muted-foreground">Price:</span>
-                              <span className="text-lg font-bold text-primary">{car.specs.price}</span>
+                              <span className="text-sm text-muted-foreground">Mumbai Price:</span>
+                              <span className="text-lg font-bold text-primary">{car.data.on_road_price_mumbai}</span>
                             </div>
                           </div>
                         </div>
@@ -165,105 +149,6 @@ export default function ComparePage() {
                   </motion.div>
                 ))}
               </div>
-            </motion.div>
-          </TabsContent>
-
-          {/* Photos Tab */}
-          <TabsContent value="photos">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6"
-            >
-              {compareList.map((car, index) => (
-                <motion.div
-                  key={car.id}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <Card className="overflow-hidden shadow-card border-0 bg-gradient-card">
-                    <CardHeader>
-                      <CardTitle className="flex items-center justify-between">
-                        <span>{car.brand} {car.model}</span>
-                        <Badge className={`${getBrandColor(car.brand)} border`}>
-                          {car.brand}
-                        </Badge>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="aspect-video rounded-lg overflow-hidden hover-scale">
-                        <img
-                          src={getCarImage(car)}
-                          alt={car.model}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </motion.div>
-          </TabsContent>
-
-          {/* Colors Tab */}
-          <TabsContent value="colors">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6"
-            >
-              {compareList.map((car, index) => (
-                <motion.div
-                  key={car.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <Card className="shadow-card border-0 bg-gradient-card">
-                    <CardHeader>
-                      <CardTitle className="flex items-center justify-between">
-                        <span>{car.brand} {car.model}</span>
-                        <Badge className={`${getBrandColor(car.brand)} border`}>
-                          {car.brand}
-                        </Badge>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="aspect-video rounded-lg overflow-hidden mb-4">
-                        <img
-                          src={getCarImage(car)}
-                          alt={car.model}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      
-                      <div className="space-y-3">
-                        <h4 className="font-semibold">Available Colors:</h4>
-                        <div className="flex flex-wrap gap-2">
-                          {car.colors.map((color) => (
-                            <button
-                              key={color.name}
-                              onClick={() => handleColorSelect(car.id, color.image)}
-                              className={`flex items-center space-x-2 px-3 py-2 rounded-lg border text-sm hover:bg-muted/50 transition-colors ${
-                                getCarImage(car) === color.image ? 'bg-primary/10 border-primary' : 'border-border'
-                              }`}
-                            >
-                              <div
-                                className="w-4 h-4 rounded-full border border-gray-300"
-                                style={{ backgroundColor: color.hex }}
-                              />
-                              <span>{color.name}</span>
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
             </motion.div>
           </TabsContent>
 
@@ -295,7 +180,7 @@ export default function ComparePage() {
                       <div className="grid md:grid-cols-2 gap-6">
                         <div className="aspect-video rounded-lg overflow-hidden">
                           <img
-                            src={getCarImage(car)}
+                            src={car.image}
                             alt={car.model}
                             className="w-full h-full object-cover"
                           />

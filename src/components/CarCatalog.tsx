@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -8,13 +9,19 @@ import { useCompare } from "@/context/CompareContext";
 
 export function CarCatalog() {
   const { addToCompare, removeFromCompare, isInCompare, compareList } = useCompare();
+  const navigate = useNavigate();
 
-  const handleCompareClick = (car: any) => {
+  const handleCompareClick = (e: React.MouseEvent, car: any) => {
+    e.stopPropagation(); // Prevent card click navigation
     if (isInCompare(car.id)) {
       removeFromCompare(car.id);
     } else {
       addToCompare(car);
     }
+  };
+
+  const handleCardClick = (carId: string) => {
+    navigate(`/car/${carId}`);
   };
 
   const getBrandColor = (brand: string) => {
@@ -55,7 +62,10 @@ export function CarCatalog() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <Card className="h-full hover-luxury bg-gradient-card border-0 shadow-card overflow-hidden">
+                <Card 
+                  className="h-full hover-luxury bg-gradient-card border-0 shadow-card overflow-hidden cursor-pointer"
+                  onClick={() => handleCardClick(car.id)}
+                >
                   <CardContent className="p-0">
                     {/* Car Image */}
                     <div className="relative h-48 overflow-hidden">
@@ -89,15 +99,15 @@ export function CarCatalog() {
                       <div className="space-y-3 mb-6">
                         <div className="flex justify-between items-center">
                           <span className="text-sm text-muted-foreground">Engine:</span>
-                          <span className="text-sm font-medium">{car.highlights.engine}</span>
+                          <span className="text-sm font-medium">{car.data.variants[0]?.engine}</span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-muted-foreground">Power:</span>
-                          <span className="text-sm font-medium">{car.highlights.power}</span>
+                          <span className="text-sm text-muted-foreground">Fuel:</span>
+                          <span className="text-sm font-medium">{car.data.variants[0]?.fuel}</span>
                         </div>
                         <div className="flex justify-between items-center">
                           <span className="text-sm text-muted-foreground">Price:</span>
-                          <span className="text-sm font-bold text-primary">{car.highlights.price}</span>
+                          <span className="text-sm font-bold text-primary">{car.data.on_road_price_mumbai}</span>
                         </div>
                       </div>
                     </div>
@@ -105,7 +115,7 @@ export function CarCatalog() {
 
                   <CardFooter className="p-6 pt-0">
                     <Button
-                      onClick={() => handleCompareClick(car)}
+                      onClick={(e) => handleCompareClick(e, car)}
                       disabled={!canAdd}
                       className={`w-full ${
                         inCompare 
