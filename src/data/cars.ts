@@ -243,7 +243,7 @@ export const cars: CarSpec[] = [
     brand: 'BMW',
     model: '3 Series',
     tagline: 'Sporty & Driver-Focused',
-    image: 'src/assets/bmw 3.png',
+    image: '/src/assets/bmw 3.png',
     data: carsData.BMW["3_Series"],
     history: 'The BMW 3 Series, introduced in 1975, is known as the benchmark for sport sedans and has been dominating Indian luxury sedan market since its launch.',
     recommendation: 'Perfect for drivers who prioritize sporty handling and dynamic performance over everything else.'
@@ -253,7 +253,7 @@ export const cars: CarSpec[] = [
     brand: 'BMW',
     model: '5 Series',
     tagline: 'Executive Luxury',
-    image: 'src/assets/bmw 5.png',
+    image: '/src/assets/bmw 5.png',
     data: carsData.BMW["5_Series"],
     history: 'The BMW 5 Series represents the perfect balance of luxury and performance in the executive sedan segment since 1972.',
     recommendation: 'Ideal for executives who want luxury without compromising on driving dynamics.'
@@ -263,7 +263,7 @@ export const cars: CarSpec[] = [
     brand: 'BMW',
     model: '7 Series',
     tagline: 'Ultimate Luxury',
-    image: 'src/assets/bmw 7.png',
+    image: '/src/assets/bmw 7.png',
     data: carsData.BMW["7_Series"],
     history: 'The BMW 7 Series flagship sedan sets the standard for luxury and innovation in the full-size luxury segment since 1977.',
     recommendation: 'The ultimate choice for those who demand the finest in automotive luxury and technology.'
@@ -273,7 +273,7 @@ export const cars: CarSpec[] = [
     brand: 'Mercedes-Benz',
     model: 'C-Class',
     tagline: 'Luxury & Comfort',
-    image: 'src/assets/c class.png',
+    image: '/src/assets/c class.png',
     data: carsData["Mercedes-Benz"]["C_Class"],
     history: 'The Mercedes C-Class debuted in 1993 and is known for its luxury and comfort-first approach, perfectly suited for Indian luxury car buyers.',
     recommendation: 'Perfect for those who prioritize comfort, refinement, and prestige in their daily drive.'
@@ -283,7 +283,7 @@ export const cars: CarSpec[] = [
     brand: 'Mercedes-Benz',
     model: 'E-Class',
     tagline: 'Sophisticated Elegance',
-    image: 'src/assets/e class.png',
+    image: '/src/assets/e class.png',
     data: carsData["Mercedes-Benz"]["E_Class"],
     history: 'The Mercedes E-Class epitomizes sophisticated luxury with cutting-edge technology and supreme comfort since 1953.',
     recommendation: 'The ideal choice for those seeking the perfect blend of luxury, technology, and comfort.'
@@ -293,7 +293,7 @@ export const cars: CarSpec[] = [
     brand: 'Mercedes-Benz',
     model: 'S-Class',
     tagline: 'Ultimate Comfort',
-    image: 'src/assets/s class.png',
+    image: '/src/assets/s class.png',
     data: carsData["Mercedes-Benz"]["S_Class"],
     history: 'The Mercedes S-Class has been the pinnacle of automotive luxury and innovation for decades since 1972.',
     recommendation: 'The ultimate expression of luxury, comfort, and technological advancement in automotive form.'
@@ -304,7 +304,7 @@ export const cars: CarSpec[] = [
     model: 'A4',
     series: 'A4',
     tagline: 'Balanced Luxury & Sportiness',
-    image: 'src/assets/audi a4.png',
+    image: '/src/assets/audi a4.png',
     data: carsData.Audi.A4,
     history: 'The Audi A4, launched in 1994, is famous for blending sporty driving with everyday usability in the Indian luxury segment.',
     recommendation: 'Ideal for those who want a balanced approach to luxury - neither too sporty nor too comfort-focused.'
@@ -314,7 +314,7 @@ export const cars: CarSpec[] = [
     brand: 'Audi',
     model: 'A6',
     tagline: 'Progressive Luxury',
-    image: 'src/assets/a6.png',
+    image: '/src/assets/a6.png',
     data: carsData.Audi.A6,
     history: 'The Audi A6 represents progressive luxury with cutting-edge technology and refined design since 1994.',
     recommendation: 'Perfect for professionals who appreciate advanced technology and sophisticated design.'
@@ -324,7 +324,7 @@ export const cars: CarSpec[] = [
     brand: 'Audi',
     model: 'A8',
     tagline: 'Technology & Luxury',
-    image: 'src/assets/a8.png',
+    image: '/src/assets/a8.png',
     data: carsData.Audi.A8,
     history: 'The Audi A8 flagship sedan showcases the pinnacle of technology and luxury in the full-size luxury segment since 1994.',
     recommendation: 'The ultimate choice for tech enthusiasts who appreciate luxury and innovation in equal measure.'
@@ -332,9 +332,9 @@ export const cars: CarSpec[] = [
 ];
 
 export const brandLogos = {
-  BMW: 'src/assets/bmw logo.png',
-  Mercedes: 'src/assets/merc logo.png',
-  Audi: 'src/assets/audi logo.jpeg'
+  BMW: '/src/assets/bmw logo.png',
+  Mercedes: '/src/assets/merc logo.png',
+  Audi: '/src/assets/audi logo.jpeg'
 };
 
 export const brandRecommendations = {
