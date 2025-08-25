@@ -6,7 +6,7 @@ import { CarCatalog } from "@/components/CarCatalog";
 import { CompareBar } from "@/components/CompareBar";
 import { CompareProvider } from "@/context/CompareContext";
 import { Button } from "@/components/ui/button";
-import { Menu, Info } from "lucide-react";
+import { Info } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Index = () => {
@@ -14,7 +14,7 @@ const Index = () => {
   const navigate = useNavigate();
 
   const handleStartComparing = () => {
-    catalogRef.current?.scrollIntoView({ behavior: 'smooth' });
+    catalogRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -35,16 +35,16 @@ const Index = () => {
                 </div>
                 <span className="text-xl font-bold luxury-heading">Luxury Compare</span>
               </div>
-              
+
               <div className="hidden md:flex items-center space-x-6">
-                <button 
+                <button
                   onClick={handleStartComparing}
                   className="text-foreground hover:text-primary transition-colors"
                 >
                   Catalog
                 </button>
-                <button 
-                  onClick={() => navigate('/about')}
+                <button
+                  onClick={() => navigate("/about")}
                   className="text-foreground hover:text-primary transition-colors"
                 >
                   About
@@ -54,8 +54,9 @@ const Index = () => {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => navigate('/about')}
+                onClick={() => navigate("/about")}
                 className="md:hidden hover-luxury"
+                aria-label="About Page"
               >
                 <Info className="w-4 h-4" />
               </Button>
