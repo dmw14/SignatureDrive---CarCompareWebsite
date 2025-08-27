@@ -27,7 +27,7 @@ export function HeroSection({ onStartComparing }: HeroSectionProps) {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-5xl md:text-7xl luxury-heading text-white mb-6"
+          className="text-5xl md:text-7xl luxury-heading text-white mb-4"
         >
           Find Your Perfect
           <span className="block text-primary animate-glow">Luxury Car</span>
@@ -37,7 +37,7 @@ export function HeroSection({ onStartComparing }: HeroSectionProps) {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed"
+          className="text-xl md:text-2xl text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed"
         >
           Whether you dream of pure sport, ultimate luxury, or a mixture of both – 
           we've got you covered.

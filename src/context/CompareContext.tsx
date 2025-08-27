@@ -1,29 +1,35 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { CarSpec } from '@/data/cars';
+import { CarSpec, CarVariant } from '@/data/cars';
+
+interface CompareItem {
+  car: CarSpec;
+  selectedVariantIndex: number;
+}
 
 interface CompareContextType {
-  compareList: CarSpec[];
+  compareList: CompareItem[];
   addToCompare: (car: CarSpec) => void;
   removeFromCompare: (carId: string) => void;
   clearCompare: () => void;
   isInCompare: (carId: string) => boolean;
+  updateVariant: (carId: string, variantIndex: number) => void;
 }
 
 const CompareContext = createContext<CompareContextType | undefined>(undefined);
 
 export function CompareProvider({ children }: { children: ReactNode }) {
-  const [compareList, setCompareList] = useState<CarSpec[]>([]);
+  const [compareList, setCompareList] = useState<CompareItem[]>([]);
 
   const addToCompare = (car: CarSpec) => {
     setCompareList(prev => {
       if (prev.length >= 3) return prev; // Max 3 cars
-      if (prev.find(c => c.id === car.id)) return prev; // Already in list
-      return [...prev, car];
+      if (prev.find(c => c.car.id === car.id)) return prev; // Already in list
+      return [...prev, { car, selectedVariantIndex: 0 }];
     });
   };
 
   const removeFromCompare = (carId: string) => {
-    setCompareList(prev => prev.filter(car => car.id !== carId));
+    setCompareList(prev => prev.filter(item => item.car.id !== carId));
   };
 
   const clearCompare = () => {
@@ -31,7 +37,17 @@ export function CompareProvider({ children }: { children: ReactNode }) {
   };
 
   const isInCompare = (carId: string) => {
-    return compareList.some(car => car.id === carId);
+    return compareList.some(item => item.car.id === carId);
+  };
+
+  const updateVariant = (carId: string, variantIndex: number) => {
+    setCompareList(prev => 
+      prev.map(item => 
+        item.car.id === carId 
+          ? { ...item, selectedVariantIndex: variantIndex }
+          : item
+      )
+    );
   };
 
   return (
@@ -40,7 +56,8 @@ export function CompareProvider({ children }: { children: ReactNode }) {
       addToCompare,
       removeFromCompare,
       clearCompare,
-      isInCompare
+      isInCompare,
+      updateVariant
     }}>
       {children}
     </CompareContext.Provider>

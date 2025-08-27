@@ -302,7 +302,6 @@ export const cars: CarSpec[] = [
     id: 'audi-a4',
     brand: 'Audi',
     model: 'A4',
-    series: 'A4',
     tagline: 'Balanced Luxury & Sportiness',
     image: '/src/assets/audi a4.png',
     data: carsData.Audi.A4,
