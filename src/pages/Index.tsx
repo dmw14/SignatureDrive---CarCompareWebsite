@@ -29,9 +29,9 @@ const Index = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">LC</span>
+                <span className="text-white font-bold text-sm">SD</span>
               </div>
-              <span className="text-xl font-bold luxury-heading">Luxury Compare</span>
+              <span className="text-xl font-bold luxury-heading">SignatureDrive</span>
             </div>
             
             <div className="hidden md:flex items-center space-x-6">

@@ -40,7 +40,7 @@ export default function AboutPage() {
               Back to Home
             </Button>
             <div>
-              <h1 className="text-2xl font-bold">About Luxury Car Compare</h1>
+              <h1 className="text-2xl font-bold">About SignatureDrive</h1>
               <p className="text-muted-foreground">
                 Your trusted guide to luxury automotive excellence
               </p>
@@ -58,7 +58,7 @@ export default function AboutPage() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl luxury-heading mb-6">
-            Redefining Luxury Car
+            Redefining SignatureDrive
             <span className="block text-primary">Comparison</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
@@ -111,7 +111,7 @@ export default function AboutPage() {
               <div className="max-w-3xl mx-auto text-center">
                 <h3 className="text-3xl font-bold mb-6">Our Story</h3>
                 <p className="text-lg text-white/90 leading-relaxed mb-6">
-                  Born from a passion for automotive excellence, Luxury Car Compare was created 
+                  Born from a passion for automotive excellence, SignatureDrive was created 
                   to bridge the gap between desire and decision. We understand that choosing 
                   between BMW's sporty precision, Mercedes-Benz's luxurious comfort, and 
                   Audi's technological innovation is more than just a purchase – it's a 
