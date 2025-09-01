@@ -35,7 +35,7 @@ The goal of **SignatureDrive** is to create a **premium, user-friendly car compa
 
 ## 🚀 Getting Started  
 
-1. **Clone the repo**  
+**Clone the repo**  
    ```bash
    git clone https://github.com/your-username/SignatureDrive.git
    cd SignatureDrive
