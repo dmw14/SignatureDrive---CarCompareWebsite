@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="src/assets/signature drive banner.png" alt="SignatureDrive Banner" width="100%" />
+</p>
+
 # 🚘 SignatureDrive  
 
 **SignatureDrive** is a luxury car comparison platform that lets you explore and compare premium cars from **BMW, Mercedes-Benz, and Audi**.  
