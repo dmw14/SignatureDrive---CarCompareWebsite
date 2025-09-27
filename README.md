@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="src/assets/signature drive banner.png" alt="SignatureDrive Banner" width="100%" />
+  <img src="src/assets/SignatureDrive banner.png" alt="SignatureDrive Banner" width="100%" />
 </p>
 
 # 🚘 SignatureDrive  
