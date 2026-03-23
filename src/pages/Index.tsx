@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { HeroSection } from "@/components/HeroSection";
 import { BrandCards } from "@/components/BrandCards";
@@ -8,17 +8,36 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
 import { Info } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/lib/supabase"; // ✅ IMPORT
 
 const Index = () => {
   const catalogRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
+  const [cars, setCars] = useState([]); // ✅ STATE
+
+  // ✅ FETCH CARS FROM SUPABASE
+  useEffect(() => {
+    const fetchCars = async () => {
+      const { data, error } = await supabase.from("cars").select("*");
+
+      if (error) {
+        console.error("Error fetching cars:", error);
+      } else {
+        setCars(data || []);
+      }
+    };
+
+    fetchCars();
+  }, []);
+
   const handleStartComparing = () => {
-    catalogRef.current?.scrollIntoView({ behavior: 'smooth' });
+    catalogRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <div className="min-h-screen bg-background">
+      
       {/* Navigation */}
       <motion.nav
         initial={{ opacity: 0, y: -20 }}
@@ -28,23 +47,24 @@ const Index = () => {
       >
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
+            
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">SD</span>
               </div>
-              <span className="text-xl font-bold luxury-heading">SignatureDrive</span>
+              <span className="text-xl font-bold">SignatureDrive</span>
             </div>
-            
+
             <div className="hidden md:flex items-center space-x-6">
               <button 
                 onClick={handleStartComparing}
-                className="text-foreground hover:text-primary transition-colors"
+                className="hover:text-primary"
               >
                 Catalog
               </button>
               <button 
                 onClick={() => navigate('/about')}
-                className="text-foreground hover:text-primary transition-colors"
+                className="hover:text-primary"
               >
                 About
               </button>
@@ -54,26 +74,27 @@ const Index = () => {
               variant="outline"
               size="sm"
               onClick={() => navigate('/about')}
-              className="md:hidden hover-luxury"
+              className="md:hidden"
             >
               <Info className="w-4 h-4" />
             </Button>
+
           </div>
         </div>
       </motion.nav>
 
-      {/* Hero Section */}
+      {/* Hero */}
       <HeroSection onStartComparing={handleStartComparing} />
 
-      {/* Brand Cards */}
-      <BrandCards />
+      {/* ✅ PASS cars HERE */}
+      <BrandCards cars={cars} />
 
       {/* Car Catalog */}
       <div ref={catalogRef}>
         <CarCatalog />
       </div>
 
-      {/* Compare Bar */}
+      {/* Compare */}
       <CompareBar />
 
       {/* Footer */}

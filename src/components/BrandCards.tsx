@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { cars, brandLogos } from "@/data/cars";
 import bmwLogo from "@/assets/bmw logo.png";
 import mercedesLogo from "@/assets/merc logo.png";
 import audiLogo from "@/assets/audi logo.jpeg";
@@ -14,18 +13,28 @@ const brandImages = {
   Audi: audiLogo
 };
 
-export function BrandCards() {
+interface Car {
+  id: number;
+  name: string;
+  brand: string;
+  image: string;
+}
+
+interface BrandCardsProps {
+  cars: Car[];
+}
+
+export function BrandCards({ cars }: BrandCardsProps) {
   const [expandedBrand, setExpandedBrand] = useState<string | null>(null);
   const navigate = useNavigate();
-  
-  const brands = ['BMW', 'Mercedes-Benz', 'Audi'] as const;
-  
+
+  const brands = ["BMW", "Mercedes-Benz", "Audi"];
+
   const getBrandCars = (brand: string) => {
-    const normalizedBrand = brand === 'Mercedes-Benz' ? 'Mercedes-Benz' : brand;
-    return cars.filter(car => car.brand === normalizedBrand);
+    return cars.filter((car) => car.brand === brand);
   };
 
-  const handleCarClick = (carId: string) => {
+  const handleCarClick = (carId: number) => {
     navigate(`/car/${carId}`);
   };
 
@@ -36,17 +45,18 @@ export function BrandCards() {
   return (
     <section className="py-20 px-4">
       <div className="max-w-7xl mx-auto">
+
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl luxury-heading mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
             Choose Your Brand
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Each brand offers a unique driving philosophy. Discover which one matches your style.
+          <p className="text-xl text-gray-500 max-w-2xl mx-auto">
+            Discover cars by brand
           </p>
         </motion.div>
 
@@ -54,7 +64,7 @@ export function BrandCards() {
           {brands.map((brand, index) => {
             const brandCars = getBrandCars(brand);
             const isExpanded = expandedBrand === brand;
-            const logoKey = brand === 'Mercedes-Benz' ? 'Mercedes' : brand;
+            const logoKey = brand === "Mercedes-Benz" ? "Mercedes" : brand;
 
             return (
               <motion.div
@@ -63,25 +73,26 @@ export function BrandCards() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <Card 
-                  className="overflow-hidden hover-luxury cursor-pointer bg-gradient-card border-0 shadow-card"
+                <Card
+                  className="overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition"
                   onClick={() => toggleBrand(brand)}
                 >
                   <CardContent className="p-0">
+
                     {/* Brand Header */}
-                    <div className="relative h-64 bg-gradient-luxury">
+                    <div className="relative h-64 bg-gray-100">
                       <img
                         src={brandImages[logoKey]}
                         alt={`${brand} logo`}
-                        className="absolute inset-0 w-full h-full object-contain p-8"
+                        className="w-full h-full object-contain p-8"
                       />
-                      <div className="absolute inset-0 bg-black/20" />
+
                       <div className="absolute bottom-4 left-6 right-6">
-                        <h3 className="text-2xl font-bold text-white mb-2">{brand}</h3>
-                        <div className="flex items-center justify-between text-white/90">
-                          <span className="text-sm">
-                            {brandCars.length} Models Available
-                          </span>
+                        <h3 className="text-2xl font-bold">{brand}</h3>
+
+                        <div className="flex justify-between text-sm text-gray-500">
+                          <span>{brandCars.length} Models</span>
+
                           {isExpanded ? (
                             <ChevronUp className="w-5 h-5" />
                           ) : (
@@ -92,37 +103,34 @@ export function BrandCards() {
                     </div>
 
                     {/* Expanded Models */}
-                    <motion.div
-                      initial={false}
-                      animate={{ height: isExpanded ? "auto" : 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="p-6 pt-0 border-t border-border">
-                        <h5 className="font-semibold mb-3">All {brand} Models:</h5>
-                        <div className="space-y-2">
-                          {brandCars.map(car => (
-                            <div 
-                              key={car.id} 
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleCarClick(car.id);
-                              }}
-                              className="flex justify-between items-center py-2 px-3 rounded-lg bg-muted/50 hover:bg-muted cursor-pointer transition-colors"
-                            >
-                              <span className="font-medium">{car.model}</span>
-                              <span className="text-sm text-muted-foreground">{car.data.on_road_price_mumbai}</span>
-                            </div>
-                          ))}
-                        </div>
+                    {isExpanded && (
+                      <div className="p-4 border-t">
+                        {brandCars.map((car) => (
+                          <div
+                            key={car.id}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleCarClick(car.id);
+                            }}
+                            className="flex items-center gap-3 p-2 rounded hover:bg-gray-100 cursor-pointer"
+                          >
+                            <img
+                              src={car.image}
+                              className="w-12 h-12 object-cover rounded"
+                            />
+                            <span>{car.name}</span>
+                          </div>
+                        ))}
                       </div>
-                    </motion.div>
+                    )}
+
                   </CardContent>
                 </Card>
               </motion.div>
             );
           })}
         </div>
+
       </div>
     </section>
   );

@@ -1,35 +1,28 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { CarSpec, CarVariant } from '@/data/cars';
-
-interface CompareItem {
-  car: CarSpec;
-  selectedVariantIndex: number;
-}
 
 interface CompareContextType {
-  compareList: CompareItem[];
-  addToCompare: (car: CarSpec) => void;
+  compareList: string[];
+  addToCompare: (car: any) => void;
   removeFromCompare: (carId: string) => void;
   clearCompare: () => void;
   isInCompare: (carId: string) => boolean;
-  updateVariant: (carId: string, variantIndex: number) => void;
 }
 
 const CompareContext = createContext<CompareContextType | undefined>(undefined);
 
 export function CompareProvider({ children }: { children: ReactNode }) {
-  const [compareList, setCompareList] = useState<CompareItem[]>([]);
+  const [compareList, setCompareList] = useState<string[]>([]);
 
-  const addToCompare = (car: CarSpec) => {
-    setCompareList(prev => {
-      if (prev.length >= 3) return prev; // Max 3 cars
-      if (prev.find(c => c.car.id === car.id)) return prev; // Already in list
-      return [...prev, { car, selectedVariantIndex: 0 }];
+  const addToCompare = (car: any) => {
+    setCompareList((prev) => {
+      if (prev.length >= 3) return prev; // Max 3
+      if (prev.includes(car.id)) return prev; // Already added
+      return [...prev, car.id];
     });
   };
 
   const removeFromCompare = (carId: string) => {
-    setCompareList(prev => prev.filter(item => item.car.id !== carId));
+    setCompareList((prev) => prev.filter((id) => id !== carId));
   };
 
   const clearCompare = () => {
@@ -37,28 +30,19 @@ export function CompareProvider({ children }: { children: ReactNode }) {
   };
 
   const isInCompare = (carId: string) => {
-    return compareList.some(item => item.car.id === carId);
-  };
-
-  const updateVariant = (carId: string, variantIndex: number) => {
-    setCompareList(prev => 
-      prev.map(item => 
-        item.car.id === carId 
-          ? { ...item, selectedVariantIndex: variantIndex }
-          : item
-      )
-    );
+    return compareList.includes(carId);
   };
 
   return (
-    <CompareContext.Provider value={{
-      compareList,
-      addToCompare,
-      removeFromCompare,
-      clearCompare,
-      isInCompare,
-      updateVariant
-    }}>
+    <CompareContext.Provider
+      value={{
+        compareList,
+        addToCompare,
+        removeFromCompare,
+        clearCompare,
+        isInCompare,
+      }}
+    >
       {children}
     </CompareContext.Provider>
   );
@@ -66,8 +50,8 @@ export function CompareProvider({ children }: { children: ReactNode }) {
 
 export function useCompare() {
   const context = useContext(CompareContext);
-  if (context === undefined) {
-    throw new Error('useCompare must be used within a CompareProvider');
+  if (!context) {
+    throw new Error('useCompare must be used within CompareProvider');
   }
   return context;
 }
