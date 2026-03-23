@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { SiteFooter } from "@/components/SiteFooter";
 import { ArrowLeft, Star, Fuel, Gauge, Settings, IndianRupee, Car, Zap } from "lucide-react";
 import { useCompare } from "@/context/CompareContext";
 import { brandRecommendations, CarVariant } from "@/data/cars";
@@ -528,6 +529,8 @@ export default function ComparePage() {
           </Card>
         </motion.div>
       </div>
+
+      <SiteFooter />
     </div>
   );
 }

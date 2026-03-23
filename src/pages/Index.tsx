@@ -4,8 +4,9 @@ import { HeroSection } from "@/components/HeroSection";
 import { BrandCards } from "@/components/BrandCards";
 import { CarCatalog } from "@/components/CarCatalog";
 import { CompareBar } from "@/components/CompareBar";
+import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
-import { Menu, Info } from "lucide-react";
+import { Info } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Index = () => {
@@ -74,6 +75,9 @@ const Index = () => {
 
       {/* Compare Bar */}
       <CompareBar />
+
+      {/* Footer */}
+      <SiteFooter />
     </div>
   );
 };

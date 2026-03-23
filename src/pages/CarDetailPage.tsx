@@ -2,6 +2,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Fuel, Gauge, Settings, IndianRupee } from "lucide-react";
 import { cars } from "@/data/cars";
+import { SiteFooter } from "@/components/SiteFooter";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -139,6 +140,8 @@ export default function CarDetailPage() {
           </div>
         </motion.div>
       </div>
+
+      <SiteFooter />
     </div>
   );
 }

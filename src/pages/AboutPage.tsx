@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { SiteFooter } from "@/components/SiteFooter";
 import { ArrowLeft, Target, Users, Award } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -182,6 +183,8 @@ export default function AboutPage() {
           </Button>
         </motion.div>
       </div>
+
+      <SiteFooter />
     </div>
   );
 }
