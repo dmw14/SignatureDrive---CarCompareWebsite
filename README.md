@@ -14,8 +14,7 @@ With a sleek UI and detailed specs, it helps enthusiasts and buyers make informe
 - 🔍 Compare luxury cars from **BMW, Mercedes-Benz, and Audi**  
 - 📊 Detailed **specifications, variants, and performance data**  
 - ⚖️ Side-by-side **car comparison system**  
-- ❤️ Add/remove cars from comparison list  
-- 🔐 **User Authentication (Supabase)** – Login / Signup  
+- ❤️ Add/remove cars from comparison list
 - ☁️ **Cloud database integration (Supabase)**  
 - 🖼️ High-quality images of each model  
 - 📱 Fully **responsive** and modern UI  
@@ -32,8 +31,7 @@ With a sleek UI and detailed specs, it helps enthusiasts and buyers make informe
 - 🎞️ Framer Motion  
 
 ### Backend / Services  
-- ☁️ Supabase  
-  - Authentication (Login / Signup)  
+- ☁️ Supabase
   - Database (Car data & future user data)  
 
 ### Tools  
