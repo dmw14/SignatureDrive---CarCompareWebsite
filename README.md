@@ -10,21 +10,57 @@ With a sleek UI and detailed specs, it helps enthusiasts and buyers make informe
 ---
 
 ## ✨ Features  
+
 - 🔍 Compare luxury cars from **BMW, Mercedes-Benz, and Audi**  
-- 📊 Detailed **specifications, performance, and features**  
+- 📊 Detailed **specifications, variants, and performance data**  
+- ⚖️ Side-by-side **car comparison system**  
+- ❤️ Add/remove cars from comparison list  
+- 🔐 **User Authentication (Supabase)** – Login / Signup  
+- ☁️ **Cloud database integration (Supabase)**  
 - 🖼️ High-quality images of each model  
-- 📱 Fully **responsive** and modern design  
+- 📱 Fully **responsive** and modern UI  
 - 🧩 Scalable architecture with reusable components  
 
 ---
 
 ## 🛠️ Tech Stack  
-This project is built with:  
-- ⚡ **Vite** – blazing fast build tool  
-- ⚛️ **React** – component-based UI library  
-- 📘 **TypeScript** – type safety and scalability  
-- 🎨 **Tailwind CSS** – utility-first styling  
-- 🪄 **shadcn/ui** – beautiful, accessible UI components  
+
+### Frontend  
+- ⚛️ React (with TypeScript)  
+- 🎨 Tailwind CSS  
+- 🪄 shadcn/ui  
+- 🎞️ Framer Motion  
+
+### Backend / Services  
+- ☁️ Supabase  
+  - Authentication (Login / Signup)  
+  - Database (Car data & future user data)  
+
+### Tools  
+- ⚡ Vite  
+- 🧠 Context API (State Management)  
+
+---
+
+## 📂 Project Structure  
+
+```
+SignatureDrive/
+│
+├── src/
+│   ├── components/      # Reusable UI components
+│   ├── pages/           # Application pages
+│   ├── context/         # Global state (Compare, Auth, etc.)
+│   ├── hooks/           # Custom React hooks
+│   ├── utils/           # Helper functions
+│   ├── data/            # Static / initial car data
+│   └── assets/          # Images, icons, banners
+│
+├── public/
+├── .env                 # Supabase environment variables
+├── package.json
+└── README.md
+```
 
 ---
 
