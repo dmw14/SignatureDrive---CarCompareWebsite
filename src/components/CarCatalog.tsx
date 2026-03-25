@@ -46,6 +46,10 @@ export function CarCatalog() {
     }
   };
 
+  const getCarImage = (car: any) => {
+    return car.image || car.image_url || car.photo_url || car.img || null;
+  };
+
   return (
     <section className="py-20 px-4 bg-muted/30">
       <div className="max-w-7xl mx-auto">
@@ -87,9 +91,21 @@ export function CarCatalog() {
                 >
                   <CardContent className="p-0">
 
-                    {/* Image Placeholder */}
-                    <div className="relative h-48 bg-gray-200 flex items-center justify-center">
-                      <span className="text-muted-foreground">Car Image</span>
+                    <div className="relative h-48 bg-gray-200 flex items-center justify-center overflow-hidden">
+                      {getCarImage(firstVariant) ? (
+                        <img
+                          src={getCarImage(firstVariant)}
+                          alt={`${group.brand} ${group.model}`}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                          onError={(e) => {
+                            e.currentTarget.src = "https://via.placeholder.com/800x500?text=Image+Unavailable";
+                          }}
+                        />
+                      ) : (
+                        <span className="text-muted-foreground">Image unavailable</span>
+                      )
+                      }
 
                       <div className="absolute top-4 left-4">
                         <Badge className={`${getBrandColor(group.brand)} border`}>

@@ -15,9 +15,11 @@ const brandImages = {
 
 interface Car {
   id: number;
-  name: string;
+  name?: string;
+  model?: string;
   brand: string;
-  image: string;
+  image?: string;
+  image_url?: string;
 }
 
 interface BrandCardsProps {
@@ -27,6 +29,9 @@ interface BrandCardsProps {
 export function BrandCards({ cars }: BrandCardsProps) {
   const [expandedBrand, setExpandedBrand] = useState<string | null>(null);
   const navigate = useNavigate();
+
+  const getCarName = (car: Car) => car.name || car.model || "Unknown Model";
+  const getCarImage = (car: Car) => car.image || car.image_url || "https://via.placeholder.com/200x120?text=No+Image";
 
   const brands = ["BMW", "Mercedes-Benz", "Audi"];
 
@@ -115,10 +120,11 @@ export function BrandCards({ cars }: BrandCardsProps) {
                             className="flex items-center gap-3 p-2 rounded hover:bg-gray-100 cursor-pointer"
                           >
                             <img
-                              src={car.image}
+                              src={getCarImage(car)}
+                              alt={getCarName(car)}
                               className="w-12 h-12 object-cover rounded"
                             />
-                            <span>{car.name}</span>
+                            <span>{getCarName(car)}</span>
                           </div>
                         ))}
                       </div>
