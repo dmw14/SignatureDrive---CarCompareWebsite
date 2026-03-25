@@ -15,14 +15,16 @@ export function CompareProvider({ children }: { children: ReactNode }) {
 
   const addToCompare = (car: any) => {
     setCompareList((prev) => {
+      const carId = String(car.id);
       if (prev.length >= 3) return prev; // Max 3
-      if (prev.includes(car.id)) return prev; // Already added
-      return [...prev, car.id];
+      if (prev.includes(carId)) return prev; // Already added
+      return [...prev, carId];
     });
   };
 
   const removeFromCompare = (carId: string) => {
-    setCompareList((prev) => prev.filter((id) => id !== carId));
+    const normalizedId = String(carId);
+    setCompareList((prev) => prev.filter((id) => id !== normalizedId));
   };
 
   const clearCompare = () => {
@@ -30,7 +32,7 @@ export function CompareProvider({ children }: { children: ReactNode }) {
   };
 
   const isInCompare = (carId: string) => {
-    return compareList.includes(carId);
+    return compareList.includes(String(carId));
   };
 
   return (

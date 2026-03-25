@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { ArrowLeft, Fuel, Gauge, Settings, IndianRupee } from "lucide-react";
 import { useCompare } from "@/context/CompareContext";
 import { useCars } from "@/hooks/useCars";
+import DetailedCompareSection from "@/components/DetailedCompareSection";
 
 export default function ComparePage() {
   const { compareList, clearCompare } = useCompare();
@@ -20,7 +21,7 @@ export default function ComparePage() {
 
   // 🔥 Get selected cars
   const selectedCars = cars?.filter((car) =>
-    compareList.includes(car.id)
+    compareList.includes(String(car.id))
   );
 
   if (!selectedCars || selectedCars.length === 0) {
@@ -117,6 +118,10 @@ export default function ComparePage() {
             </Card>
           </motion.div>
         ))}
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 pb-20">
+        <DetailedCompareSection selectedCars={selectedCars} />
       </div>
 
       <SiteFooter />

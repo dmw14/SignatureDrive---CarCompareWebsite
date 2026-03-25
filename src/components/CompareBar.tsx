@@ -4,9 +4,11 @@ import { Badge } from "@/components/ui/badge";
 import { X, ArrowRight } from "lucide-react";
 import { useCompare } from "@/context/CompareContext";
 import { useNavigate } from "react-router-dom";
+import { useCars } from "@/hooks/useCars";
 
 export function CompareBar() {
   const { compareList, removeFromCompare, clearCompare } = useCompare();
+  const { data: cars } = useCars();
   const navigate = useNavigate();
 
   if (compareList.length === 0) return null;
@@ -14,6 +16,9 @@ export function CompareBar() {
   const handleCompareNow = () => {
     navigate('/compare');
   };
+
+  const selectedCars =
+    cars?.filter((car: any) => compareList.includes(String(car.id))) ?? [];
 
   return (
     <AnimatePresence>
@@ -31,19 +36,19 @@ export function CompareBar() {
             </h3>
             
             <div className="flex items-center space-x-2">
-              {compareList.map((item) => (
+              {selectedCars.map((car: any) => (
                 <motion.div
-                  key={item.car.id}
+                  key={car.id}
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0, opacity: 0 }}
                   className="relative"
                 >
                   <Badge variant="secondary" className="bg-white/20 text-white border-white/30 pr-7">
-                    {item.car.brand} {item.car.model}
+                    {car.brand} {car.model}
                   </Badge>
                   <button
-                    onClick={() => removeFromCompare(item.car.id)}
+                    onClick={() => removeFromCompare(String(car.id))}
                     className="absolute -top-1 -right-1 bg-destructive text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-destructive/80 transition-colors"
                   >
                     <X className="w-3 h-3" />
