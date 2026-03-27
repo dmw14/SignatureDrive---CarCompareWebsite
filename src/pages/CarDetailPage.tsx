@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCars } from "@/hooks/useCars";
 import { Button } from "@/components/ui/button";
@@ -19,11 +19,36 @@ export default function CarDetailPage() {
   const { carId } = useParams();
   const { data: cars, isLoading } = useCars();
   const navigate = useNavigate();
+  const [selectedVariantId, setSelectedVariantId] = useState<string>(String(carId || ""));
 
-  const car = useMemo(
+  useEffect(() => {
+    setSelectedVariantId(String(carId || ""));
+  }, [carId]);
+
+  const baseCar = useMemo(
     () => cars?.find((item: any) => String(item.id) === String(carId)) ?? null,
     [cars, carId]
   );
+
+  const getModelKey = (item: any) => {
+    const brand = String(item?.brand || "").trim().toLowerCase();
+    const model = String(item?.model || item?.name || "").trim().toLowerCase();
+    return `${brand}::${model}`;
+  };
+
+  const variants = useMemo(() => {
+    if (!baseCar || !cars) return [];
+    const modelKey = getModelKey(baseCar);
+    return cars.filter((item: any) => getModelKey(item) === modelKey);
+  }, [baseCar, cars]);
+
+  const car = useMemo(() => {
+    if (!cars) return null;
+    const selected = cars.find(
+      (item: any) => String(item.id) === String(selectedVariantId)
+    );
+    return selected ?? baseCar;
+  }, [cars, selectedVariantId, baseCar]);
 
   const image =
     car?.image ||
@@ -78,6 +103,28 @@ export default function CarDetailPage() {
               {car.brand} {modelName}
             </h1>
             <p className="text-muted-foreground">{variant}</p>
+
+            {variants.length > 1 && (
+              <div className="flex flex-wrap gap-2">
+                {variants.map((item: any) => {
+                  const itemId = String(item.id);
+                  const itemVariant =
+                    getFirstAvailable(item, ["variant"], `Variant ${itemId}`);
+                  const isSelected = itemId === String(car.id);
+
+                  return (
+                    <Button
+                      key={itemId}
+                      size="sm"
+                      variant={isSelected ? "default" : "outline"}
+                      onClick={() => setSelectedVariantId(itemId)}
+                    >
+                      {itemVariant}
+                    </Button>
+                  );
+                })}
+              </div>
+            )}
 
             <img
               src={image}

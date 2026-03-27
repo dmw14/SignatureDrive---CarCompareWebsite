@@ -1,6 +1,13 @@
 import React from 'react';
 import { useCompare } from '@/context/CompareContext';
 import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 function highlightDifference<T>(vals: T[]): { value: T; highlight: boolean }[] {
   // Mark values different from others as highlighted
@@ -10,7 +17,15 @@ function highlightDifference<T>(vals: T[]): { value: T; highlight: boolean }[] {
   });
 }
 
-const DetailedCompareSection = ({ selectedCars }: { selectedCars: any[] }) => {
+const DetailedCompareSection = ({
+  selectedCars,
+  getVariantOptions,
+  onVariantChange,
+}: {
+  selectedCars: any[];
+  getVariantOptions: (car: any) => any[];
+  onVariantChange: (currentCarId: string, nextCarId: string) => void;
+}) => {
   const { removeFromCompare, clearCompare } = useCompare();
 
   if (!selectedCars || selectedCars.length < 2) {
@@ -81,6 +96,21 @@ const DetailedCompareSection = ({ selectedCars }: { selectedCars: any[] }) => {
                 <th key={car.id} className="border-b border-r last:border-r-0 border-border p-3 bg-muted/50 text-center flex-1">
                   <div className="flex flex-col items-center space-y-2">
                     <span className="font-semibold">{car.brand} {car.model}</span>
+                    <Select
+                      value={String(car.id)}
+                      onValueChange={(value) => onVariantChange(String(car.id), value)}
+                    >
+                      <SelectTrigger className="w-full max-w-[220px] bg-background">
+                        <SelectValue placeholder="Choose variant" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {getVariantOptions(car).map((variantCar) => (
+                          <SelectItem key={variantCar.id} value={String(variantCar.id)}>
+                            {variantCar.variant || `Variant ${variantCar.id}`}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <Button
                       size="sm"
                       variant="ghost"

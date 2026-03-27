@@ -8,9 +8,16 @@ import { ArrowLeft, Fuel, Gauge, Settings, IndianRupee } from "lucide-react";
 import { useCompare } from "@/context/CompareContext";
 import { useCars } from "@/hooks/useCars";
 import DetailedCompareSection from "@/components/DetailedCompareSection";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function ComparePage() {
-  const { compareList, clearCompare } = useCompare();
+  const { compareList, clearCompare, replaceCompareCar } = useCompare();
   const { data: cars, isLoading } = useCars();
   const navigate = useNavigate();
 
@@ -20,9 +27,26 @@ export default function ComparePage() {
   }
 
   // 🔥 Get selected cars
-  const selectedCars = cars?.filter((car) =>
-    compareList.includes(String(car.id))
-  );
+  const getModelKey = (car: any) => {
+    const brand = String(car?.brand || "").trim().toLowerCase();
+    const model = String(car?.model || car?.name || "").trim().toLowerCase();
+    return `${brand}::${model}`;
+  };
+
+  const selectedCars =
+    compareList
+      .map((id) => cars?.find((car) => String(car.id) === String(id)))
+      .filter(Boolean) ?? [];
+
+  const getVariantOptions = (car: any) => {
+    if (!cars || !car) return [];
+    const modelKey = getModelKey(car);
+    return cars.filter((item) => getModelKey(item) === modelKey);
+  };
+
+  const handleVariantChange = (currentCarId: string, nextCarId: string) => {
+    replaceCompareCar(currentCarId, nextCarId);
+  };
 
   if (!selectedCars || selectedCars.length === 0) {
     return (
@@ -86,6 +110,24 @@ export default function ComparePage() {
                 </Badge>
                 <CardTitle>{car.model}</CardTitle>
                 <p className="text-sm text-muted-foreground">{car.variant}</p>
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Choose Variant</p>
+                  <Select
+                    value={String(car.id)}
+                    onValueChange={(value) => handleVariantChange(String(car.id), value)}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select variant" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {getVariantOptions(car).map((variantCar) => (
+                        <SelectItem key={variantCar.id} value={String(variantCar.id)}>
+                          {variantCar.variant || `Variant ${variantCar.id}`}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </CardHeader>
 
               <CardContent className="space-y-4">
@@ -121,7 +163,11 @@ export default function ComparePage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 pb-20">
-        <DetailedCompareSection selectedCars={selectedCars} />
+        <DetailedCompareSection
+          selectedCars={selectedCars}
+          getVariantOptions={getVariantOptions}
+          onVariantChange={handleVariantChange}
+        />
       </div>
 
       <SiteFooter />

@@ -4,6 +4,7 @@ interface CompareContextType {
   compareList: string[];
   addToCompare: (car: any) => void;
   removeFromCompare: (carId: string) => void;
+  replaceCompareCar: (currentCarId: string, nextCarId: string) => void;
   clearCompare: () => void;
   isInCompare: (carId: string) => boolean;
 }
@@ -27,6 +28,21 @@ export function CompareProvider({ children }: { children: ReactNode }) {
     setCompareList((prev) => prev.filter((id) => id !== normalizedId));
   };
 
+  const replaceCompareCar = (currentCarId: string, nextCarId: string) => {
+    const normalizedCurrentId = String(currentCarId);
+    const normalizedNextId = String(nextCarId);
+
+    setCompareList((prev) => {
+      if (!prev.includes(normalizedCurrentId)) return prev;
+      if (normalizedCurrentId === normalizedNextId) return prev;
+      if (prev.includes(normalizedNextId)) return prev;
+
+      return prev.map((id) =>
+        id === normalizedCurrentId ? normalizedNextId : id
+      );
+    });
+  };
+
   const clearCompare = () => {
     setCompareList([]);
   };
@@ -41,6 +57,7 @@ export function CompareProvider({ children }: { children: ReactNode }) {
         compareList,
         addToCompare,
         removeFromCompare,
+        replaceCompareCar,
         clearCompare,
         isInCompare,
       }}
