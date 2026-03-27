@@ -18,18 +18,24 @@ const Index = () => {
 
   // ✅ FETCH CARS FROM SUPABASE
   useEffect(() => {
-    const fetchCars = async () => {
-      const { data, error } = await supabase.from("cars").select("*");
+  const fetchCars = async () => {
+    const { data, error } = await supabase.from("cars").select("*");
 
-      if (error) {
-        console.error("Error fetching cars:", error);
-      } else {
-        setCars(data || []);
-      }
-    };
+    if (error) {
+      console.error("Error fetching cars:", error);
+    } else {
+      const brandOrder = ["BMW", "Mercedes-Benz", "Audi"];
 
-    fetchCars();
-  }, []);
+      const sortedCars = (data || [])
+        .sort((a, b) => a.model.localeCompare(b.model))
+        .sort((a, b) => brandOrder.indexOf(a.brand) - brandOrder.indexOf(b.brand));
+
+      setCars(sortedCars);
+    }
+  };
+
+  fetchCars();
+}, []);
 
   const handleStartComparing = () => {
     catalogRef.current?.scrollIntoView({ behavior: "smooth" });
