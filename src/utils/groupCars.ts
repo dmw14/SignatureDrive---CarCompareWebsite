@@ -15,5 +15,11 @@ export const groupCarsByModel = (cars: any[]) => {
     grouped[key].variants.push(car)
   })
 
-  return Object.values(grouped)
+  // Sort by brand first, then by model within each brand
+  return Object.values(grouped).sort((a, b) => {
+    if (a.brand !== b.brand) {
+      return a.brand.localeCompare(b.brand)
+    }
+    return a.model.localeCompare(b.model)
+  })
 }
