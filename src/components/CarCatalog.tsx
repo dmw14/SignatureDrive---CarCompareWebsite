@@ -12,10 +12,10 @@ export function CarCatalog() {
   const { addToCompare, removeFromCompare, isInCompare, compareList } = useCompare();
   const navigate = useNavigate();
 
-  // 🔥 FETCH DATA
+  //  FETCH DATA
   const { data: cars, isLoading } = useCars();
 
-  // ⏳ Loading state
+  //  Loading state
   if (isLoading) {
     return <div className="text-center py-20">Loading cars...</div>;
   }
